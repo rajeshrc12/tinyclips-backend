@@ -4,6 +4,7 @@ from app.config.settings import NEBIUS_API_KEY
 import requests
 from io import BytesIO
 from PIL import Image
+import random
 
 client = OpenAI(
     base_url="https://api.studio.nebius.com/v1/",

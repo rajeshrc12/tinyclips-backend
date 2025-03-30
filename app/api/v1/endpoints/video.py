@@ -2,12 +2,13 @@ from fastapi import APIRouter
 from moviepy.editor import VideoClip, AudioFileClip
 import os
 from app.schemas.video import VideoRequest
-from app.services.video import update_balance, update_video, make_frame
+from app.services.video import update_balance, update_video
 from app.services.replicate import generate_audio
 from app.services.assembly import transcribe_audio
 from app.services.nebius import create_image_prompts, generate_image
 from app.services.wasabi import upload_video
 from app.utils.audio import get_audio_in_bytes
+from app.utils.video import make_frame
 from app.utils.subtitle import split_time_series, get_subtitle_with_image_index
 from concurrent.futures import ThreadPoolExecutor
 
@@ -26,6 +27,7 @@ def create(video_data: VideoRequest):
     voice_speed = video_data.voiceSpeed
     voice_name = video_data.voiceName
     estimated_charges = video_data.estimatedCharges
+
     audio_link = generate_audio(
         prompt, voice_speed, voice_name)
     audio = get_audio_in_bytes(audio_link)
@@ -60,8 +62,6 @@ def create(video_data: VideoRequest):
     fade_duration = min(0.5, audio_clip.duration * 0.1)
     audio_clip = audio_clip.audio_fadeout(fade_duration)
     video_clip = video_clip.set_audio(audio_clip)
-    # video_clip.write_videofile(f"{int(time.time() * 1000)}.mp4", codec='libx264',
-    #                            audio_codec='aac', fps=24, threads=4, preset='ultrafast')
     video_link = upload_video(video_clip, video_id)
     audio_clip.close()
     os.remove(temp_audio_file_path)

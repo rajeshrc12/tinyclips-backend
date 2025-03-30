@@ -14,7 +14,6 @@ def transcribe_audio(audio):
         speaker_labels=True, punctuate=True, format_text=True)
 
     transcript = transcriber.transcribe(audio, config)
-    print(transcript)
     if transcript.status == aai.TranscriptStatus.error:
         print(f"Transcription failed: {transcript.error}")
         exit(1)

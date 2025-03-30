@@ -11,11 +11,17 @@ from app.utils.audio import get_audio_in_bytes
 from app.utils.video import make_frame
 from app.utils.subtitle import split_time_series, get_subtitle_with_image_index
 from concurrent.futures import ThreadPoolExecutor
+from app.config.settings import IMAGE_PRICE
 
 import tempfile
 
 
 router = APIRouter()
+
+
+@router.get("/")
+def hello():
+    return {"message": "Unathorized user"}
 
 
 @router.post("/")
@@ -67,7 +73,9 @@ def create(video_data: VideoRequest):
     os.remove(temp_audio_file_path)
     if video_link:
         update_video(video_id, len(background_images), audio_clip.duration)
-        actual_charges = round((len(background_images)*0.0013), 4)
+        image_price = round(float(IMAGE_PRICE), 4)
+        actual_charges = len(background_images) * image_price
+        actual_charges = round(actual_charges, 4)
         final_charges = round(estimated_charges - actual_charges, 4)
         print(estimated_charges, actual_charges, final_charges)
         update_balance(user_id, final_charges)

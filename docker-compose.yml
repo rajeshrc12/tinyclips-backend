@@ -17,5 +17,7 @@ services:
       - ASSEMBLYAI_API_KEY=${ASSEMBLYAI_API_KEY}
       - NEBIUS_API_KEY=${NEBIUS_API_KEY}
       - ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - IMAGE_PRICE=${IMAGE_PRICE}
     env_file:
       - .env

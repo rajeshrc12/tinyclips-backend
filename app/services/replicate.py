@@ -4,6 +4,8 @@ from io import BytesIO
 from PIL import Image
 
 client = replicate.Client(api_token=REPLICATE_API_TOKEN)
+
+
 def generate_audio(script, speed=0.9, voice="am_adam"):
     print("Generating speech...")
     output = client.run(
@@ -14,18 +16,19 @@ def generate_audio(script, speed=0.9, voice="am_adam"):
             "voice": voice
         }
     )
-    # output = "https://replicate.delivery/czjl/ZpQ6y6VCoBZcDxuWJbp9rwXgTbUhgVUzwRn2iDiTXSxpZhCF/output.wav"
+    # output = "https://replicate.delivery/czjl/Qh17Yd9ZzuYxMRigUUj9oqdth0nZkG57ig3V3pdzufDABiOKA/output.wav"
     if output:
         print("Generating speech completed!!!")
         return output
     else:
         print("Failed to create the audio file.")
         return False
-    
-def generate_image(prompt,index=0,count=0):
+
+
+def generate_image(prompt, index=0, count=0):
     if count:
         print(f"->processing {index+1} image of {count}...")
-    output = replicate.run(
+    output = client.run(
         "black-forest-labs/flux-schnell",
         input={
             "prompt": prompt,
@@ -56,5 +59,3 @@ def generate_image(prompt,index=0,count=0):
     else:
         print("Invalid response from Replicate API.")
         return None
-
-

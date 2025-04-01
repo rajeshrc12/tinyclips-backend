@@ -20,6 +20,7 @@ Main Script:
 "{main_script}"
 
 Now, analyze the Sub-Script, which is a part of the Main Script. Your task is to generate total {image_count} relevant and visually compelling {image_style} style portrait image prompt that aligns with Sub-Script.
+Mention {image_style} style in each prompt.
 Accurately depict the scene, emotions, facial expressions, and overall atmosphere.
 If the Sub-Script references a product, service, or advertisement then add appropriate text, symbols, or objects to blend seamlessly into the environment.
 Primary focus should be on the Sub-Script when generating the prompts, ensuring relevance and coherence.
